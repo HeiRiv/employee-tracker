@@ -18,7 +18,7 @@ User can choose to add an employee
 User will be prompted to enter the employee’s first name, last name, role and that employee is added to the database 
 
 ## Final Product
-😄 Please see below a quick view of my code on JavaScript fot my Employee tracker 😄
+😄 Please see below a quick view of my code on JavaScript for my Employee tracker 😄
 
 <img width="1440" alt="Screen Shot 2023-07-11 at 2 01 14 PM" src="https://github.com/HeiRiv/employee-tracker/assets/128196586/320814f8-53b7-438f-bee5-438d1277a605">
 
