@@ -87,61 +87,74 @@ function viewAllDepartments() {
 }
 
 function addNewEmployee() {
-  inquirer
-    .prompt([
-      {
-        name: "first_name",
-        message: "What is his/her first name?",
-      },
-      {
-        name: "last_name",
-        message: "What is his/her last name?",
-      },
-      {
-        name: "department_id",
-        message: "What is his/her department?",
-      },
-      {
-        name: "role_id",
-        message: "What is his/her role?",
-      },
-    ])
-    .then((res) => {
-      console.log(res);
-      db.addNewEmployee(res)
-        .then(() => {
-          console.table("User was added");
-        })
-        .then(() => presentQuestions());
-    });
+  db.viewAllRoles().then(([rows]) => {
+    let roles = rows;
+    const rolesChoices = roles.map(({ id, title }) => ({
+      title: title,
+      value: id,
+    }));
+
+    inquirer
+      .prompt([
+        {
+          name: "first_name",
+          message: "What is his/her first name?",
+        },
+        {
+          name: "last_name",
+          message: "What is his/her last name?",
+        },
+        {
+          type: "list",
+          name: "role_id",
+          message: "What is his/her role?",
+          choices: rolesChoices,
+        },
+      ])
+      .then((res) => {
+        console.log(res);
+        db.addNewEmployee(res)
+          .then(() => {
+            console.table("User was added");
+          })
+          .then(() => presentQuestions());
+      });
+  });
 }
 
 function addNewRole() {
-  inquirer
-    .prompt([
-      {
-        name: "title",
-        message: "What is the title?",
-      },
-      {
-        name: "salary",
-        message: "What is the salary?",
-      },
-      {
-        type: "list", //How can I add the list of depts here?
-        name: "department_id",
-        message: "In which department would you like to add this role?",
-        // choices:
-      },
-    ])
-    .then((res) => {
-      console.log(res);
-      db.addNewRole(res)
-        .then(() => {
-          console.table("Role was added");
-        })
-        .then(() => presentQuestions());
-    });
+  db.viewAllDepartments().then(([rows]) => {
+    let departments = rows;
+    const departmentChoices = departments.map(({ id, name }) => ({
+      name: name,
+      value: id,
+    }));
+    inquirer
+      .prompt([
+        {
+          name: "title",
+          message: "What is the title?",
+        },
+        {
+          name: "salary",
+          message: "What is the salary?",
+        },
+        {
+          type: "list",
+          name: "department_id",
+          message: "In which department would you like to add this role?",
+          choices: departmentChoices,
+        },
+      ])
+      .then((res) => {
+        console.log(res);
+        db.addNewRole(res)
+          .then(() => {
+            console.table("Role was added");
+          })
+          .then(() => presentQuestions());
+      });
+  });
 }
 
 function addNewDepartment() {
